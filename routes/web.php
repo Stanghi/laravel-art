@@ -27,9 +27,9 @@ Route::middleware(['auth', 'verified'])
     ->name('admin.')
     ->prefix('admin')
     ->group(function () {
-    /* ! DashboardController ? */
+        Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
         Route::resource('artists', ArtistController::class);
-
+        Route::get('artists/orderby/{column}/{direction}', [ArtistController::class, 'orderby'])->name('artists.orderby');
     });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

@@ -17,8 +17,14 @@ class ArtistController extends Controller
      */
     public function index()
     {
-        $artists = Artist::all();
-        return view('admin.artists.index', compact('artists'));
+        return $this->orderby('id', 'asc');
+    }
+
+    public function orderby($column, $direction)
+    {
+        $direction = $direction === 'desc' ? 'asc' : 'desc';
+        $artists = Artist::orderby($column, $direction)->paginate(10);
+        return view('admin.artists.index', compact('artists', 'direction'));
     }
 
     /**
@@ -54,7 +60,7 @@ class ArtistController extends Controller
      */
     public function show(Artist $artist)
     {
-        //
+        return view('admin.artists.show', compact('artist'));
     }
 
     /**
@@ -65,7 +71,7 @@ class ArtistController extends Controller
      */
     public function edit(Artist $artist)
     {
-        //
+        return view('admin.artists.edit', compact('artist'));
     }
 
     /**
@@ -77,7 +83,14 @@ class ArtistController extends Controller
      */
     public function update(UpdateArtistRequest $request, Artist $artist)
     {
-        //
+        $data = $request->all();
+        if($data['name'] != $artist->name)
+            $data['slug'] = Artist::generateSlug($data['name']);
+
+        $artist->fill($data);
+        $artist->update();
+
+        return redirect()->route('admin.artists.show', $artist);
     }
 
     /**
@@ -88,6 +101,7 @@ class ArtistController extends Controller
      */
     public function destroy(Artist $artist)
     {
-        //
+        $artist->delete();
+        return redirect()->route('admin.artists.index');
     }
 }
