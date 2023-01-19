@@ -1,6 +1,10 @@
 <?php
 
+
+
+
 use App\Http\Controllers\Admin\ArtistController;
+
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,13 +19,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [ArtistController::class, 'index'])->name('home');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+
+
 
 Route::middleware(['auth', 'verified'])
     ->name('admin.')
@@ -31,5 +32,6 @@ Route::middleware(['auth', 'verified'])
         Route::resource('artists', ArtistController::class);
         Route::get('artists/orderby/{column}/{direction}', [ArtistController::class, 'orderby'])->name('artists.orderby');
     });
+
 
 require __DIR__ . '/auth.php';
