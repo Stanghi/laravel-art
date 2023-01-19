@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\Guest\PageController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ArtistController;
-
+use App\Http\Controllers\Admin\MuseumController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -16,16 +18,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [ArtistController::class, 'index'])->name('home');
+Route::get('/', [PageController::class, 'index'])->name('home');
 
 Route::middleware(['auth', 'verified'])
     ->name('admin.')
     ->prefix('admin')
     ->group(function () {
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-        Route::resource('artists', ArtistController::class);
+        Route::resource('artist', ArtistController::class);
         Route::resource('museums', MuseumController::class);
-        Route::get('artists/orderby/{column}/{direction}', [ArtistController::class, 'orderby'])->name('artists.orderby');
+        Route::get('artists/orderby/{column}/{direction}', [ArtistController::class, 'orderby'])->name('artist.orderby');
     });
 
 

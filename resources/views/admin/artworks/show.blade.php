@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    | Admin Project-Show
+    | Admin Artwork-Show
 @endsection
 
 @section('content')

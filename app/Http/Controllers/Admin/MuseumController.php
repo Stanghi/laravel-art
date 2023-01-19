@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Museum;
 use Illuminate\Http\Request;
 use App\Http\Requests\MuseumRequest;
+use App\Models\Museum;
 
 class MuseumController extends Controller
 {
@@ -40,12 +40,12 @@ class MuseumController extends Controller
     {
         $form_data = $request->all();
 
-        $new_project = new Museum();
+        $new_museum = new Museum();
         $form_data['slug'] = Museum::generateSlug($form_data['name']);
-        $new_project->fill($form_data);
-        $new_project->save();
+        $new_museum->fill($form_data);
+        $new_museum->save();
 
-        return redirect()->route('admin.museums.show', $new_project);
+        return redirect()->route('admin.museums.show', $new_museum);
     }
 
     /**

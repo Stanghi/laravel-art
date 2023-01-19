@@ -24,7 +24,7 @@ class ArtistController extends Controller
     {
         $direction = $direction === 'desc' ? 'asc' : 'desc';
         $artists = Artist::orderby($column, $direction)->paginate(10);
-        return view('admin.artists.index', compact('artists', 'direction'));
+        return view('admin.artist.index', compact('artists', 'direction'));
     }
 
     /**
@@ -34,7 +34,7 @@ class ArtistController extends Controller
      */
     public function create()
     {
-        return view('admin.artists.create');
+        return view('admin.artist.create');
     }
 
     /**
@@ -49,7 +49,7 @@ class ArtistController extends Controller
         $data['slug'] = Artist::generateSlug($data['name']);
         $new_artist = Artist::create($data);
 
-        return redirect()->route('admin.artists.show', $new_artist);
+        return redirect()->route('admin.artist.show', $new_artist);
     }
 
     /**
@@ -60,7 +60,7 @@ class ArtistController extends Controller
      */
     public function show(Artist $artist)
     {
-        return view('admin.artists.show', compact('artist'));
+        return view('admin.artist.show', compact('artist'));
     }
 
     /**
@@ -71,7 +71,7 @@ class ArtistController extends Controller
      */
     public function edit(Artist $artist)
     {
-        return view('admin.artists.edit', compact('artist'));
+        return view('admin.artist.edit', compact('artist'));
     }
 
     /**
@@ -84,13 +84,13 @@ class ArtistController extends Controller
     public function update(UpdateArtistRequest $request, Artist $artist)
     {
         $data = $request->all();
-        if($data['name'] != $artist->name)
+        if ($data['name'] != $artist->name)
             $data['slug'] = Artist::generateSlug($data['name']);
 
         $artist->fill($data);
         $artist->update();
 
-        return redirect()->route('admin.artists.show', $artist);
+        return redirect()->route('admin.artist.show', $artist);
     }
 
     /**
@@ -102,6 +102,6 @@ class ArtistController extends Controller
     public function destroy(Artist $artist)
     {
         $artist->delete();
-        return redirect()->route('admin.artists.index');
+        return redirect()->route('admin.artist.index');
     }
 }
