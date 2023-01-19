@@ -13,7 +13,7 @@
             <tbody>
                 @forelse ($museums as $museum)
                 <tr>
-                    <td>{{$museum->name}}</th>
+                    <td>{{$museum->name}}</td>
                     <td>{{$museum->nation}}</td>
                     <td><a class="btn btn-outline-primary" href="{{route('admin.artists.show')}}"><i class="fa-solid fa-eye"></i></a></td>
                     <td><a class="btn btn-outline-success" href="{{route('admin.artists.edit')}}"><i class="fa-regular fa-pen-to-square"></i></a></td>
